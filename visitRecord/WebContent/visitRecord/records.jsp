@@ -9,15 +9,22 @@
 <title>방명록 목록</title>
 </head>
 <body>
-<h1>방명록 목록</h1>
+<center>
+    <hr width="500" size="2" color="#5DC75D" noshade>
+       <h2>방명록 리스트</h2>
+    <hr width="500" size="2" color="#5DC75D" noshade>
+ </center>
+ <table border="1" width="500" align="center"  cellpadding="3" cellspacing="1" 
+bordercolor="#5DC75D">
 <%
 ArrayList<RecordSet> records = (ArrayList<RecordSet>)request.getAttribute("records"); 
 for(RecordSet record : records) {
 %>
-<%=record.getEmail() %>,
-<%=record.getPwd() %>,
-<a href='update?email=<%=record.getEmail()%>&contents=<%=record.getContents()%>'><%=record.getContents()%></a><br>
+ <tr>
+<td><a href='update?email=<%=record.getEmail()%>'> <%=record.getSubject() %></a> </td>
+ </tr>
 
 <%} %>
 </body>
 </html>
+

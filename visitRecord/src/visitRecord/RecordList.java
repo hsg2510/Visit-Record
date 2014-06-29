@@ -28,8 +28,8 @@ public class RecordList extends GenericServlet {
 		ResultSet rs = null;
 		
 		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
+			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select * from visitRecord");
 			response.setContentType("text/html; charset=UTF-8");
@@ -39,6 +39,9 @@ public class RecordList extends GenericServlet {
 								.setEmail(rs.getString("email"))
 								.setPwd(rs.getString("pwd"))
 								.setContents(rs.getString("contents"))
+								.setSubject(rs.getString("subject"))
+								.setCreDate(rs.getDate("cre_date"))
+								.setModDate(rs.getDate("mod_date"))
 						);	
 			}
 			

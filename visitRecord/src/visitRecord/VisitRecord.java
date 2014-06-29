@@ -51,13 +51,17 @@ public class VisitRecord extends HttpServlet {
 		PreparedStatement stmt = null;
 		
 		try{
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
-			stmt = conn.prepareStatement("Insert into visitRecord (email, pwd, contents)" +
-			                              " values (?, ?, ?)");
+			
+			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			//conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
+			stmt = conn.prepareStatement("Insert into visitRecord (email, pwd, contents, subject, cre_date, mod_date)" +
+			                              " values (?, ?, ?, ?, now(), now())");
 			stmt.setString(1, request.getParameter("email"));
 			stmt.setString(2, request.getParameter("password"));
 			stmt.setString(3, request.getParameter("visitRecord"));
+			stmt.setString(4, request.getParameter("subject"));
 			stmt.executeUpdate();
 			
 			response.addHeader("Refresh", "1;url=list");

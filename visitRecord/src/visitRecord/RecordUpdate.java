@@ -7,8 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import value.RecordSet;
 
 public class RecordUpdate extends HttpServlet {
+	RecordSet records = new RecordSet();
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	                      throws ServletException, IOException {
@@ -26,8 +26,10 @@ public class RecordUpdate extends HttpServlet {
 		ResultSet rs = null;
 		
 		try{
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
+			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			//conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
 			//Class.forName(this.getInitParameter("driver"));
 			//conn = DriverManager.getConnection(this.getInitParameter("url"),this.getInitParameter("username"),
 			//									this.getInitParameter("password"));
@@ -38,12 +40,15 @@ public class RecordUpdate extends HttpServlet {
 			
 			response.setContentType("text/html; charset=UTF-8");
 			
-			ArrayList<RecordSet> records = new ArrayList<RecordSet>();
-			records.add(new RecordSet()
+			
+			//ArrayList<RecordSet> records = new ArrayList<RecordSet>();
+			records
 							.setEmail(rs.getString("email"))
 							.setPwd(rs.getString("pwd"))
 							.setContents(rs.getString("contents"))
-					);	
+							.setSubject(rs.getString("subject"))
+							.setCreDate(rs.getDate("cre_date"))
+							.setModDate(rs.getDate("mod_date"));
 			
 			request.setAttribute("records",records);
 			
@@ -76,12 +81,21 @@ public class RecordUpdate extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		String email,pwd;
 		try{
-			Class.forName(this.getInitParameter("driver"));
-			conn = DriverManager.getConnection(
-					this.getInitParameter("url"),
-					this.getInitParameter("username"),
-					this.getInitParameter("password"));
+			email = request.getParameter("email");
+			pwd = request.getParameter("password");
+			if(!records.isMember(email,pwd))
+			{	
+				JOptionPane.showMessageDialog(null,"비번틀림");
+			}
+			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");	
+			//Class.forName(this.getInitParameter("driver"));
+			//conn = DriverManager.getConnection(
+				//	this.getInitParameter("url"),
+				//	this.getInitParameter("username"),
+				//	this.getInitParameter("password"));
 			stmt = conn.prepareStatement(
 					"update visitRecord set contents=?"
 					+ " where email=?");
