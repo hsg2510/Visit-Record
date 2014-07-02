@@ -30,7 +30,10 @@
   		<param-value>study</param-value>
   	</init-param>
   </servlet>
-  
+  <servlet>
+  	<servlet-name>UpdateMessage</servlet-name>
+  	<servlet-class>visitRecord.UpdateMessage</servlet-class>
+  </servlet>
   
   <!-- 서블릿을 URL과 연결 -->
   <servlet-mapping>
@@ -44,6 +47,10 @@
   <servlet-mapping>
   	<servlet-name>RecordUpdate</servlet-name>
   	<url-pattern>/update</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateMessage</servlet-name>
+  	<url-pattern>/message</url-pattern>
   </servlet-mapping>
 
   

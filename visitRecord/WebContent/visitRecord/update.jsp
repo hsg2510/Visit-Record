@@ -37,7 +37,7 @@ RecordSet record = (RecordSet)request.getAttribute("records");
 내용: <input type='text' name='contents' value='<%=record.getContents()%>'> <br>
 <input type='text' name='password' value='<%=record.getPwd()%>'> <br>
 <input type ='submit' value='수정'>
-<input type = 'button' value='취소' onclick='location.href="list"'>
+<input type = 'button' value='취소' onclick='location.href="message"'>
 </form>
 </body>
 </html>

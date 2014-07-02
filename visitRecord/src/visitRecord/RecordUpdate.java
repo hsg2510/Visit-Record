@@ -87,7 +87,8 @@ public class RecordUpdate extends HttpServlet {
 			pwd = request.getParameter("password");
 			if(!records.isMember(email,pwd))
 			{	
-				JOptionPane.showMessageDialog(null,"비번틀림");
+				//JOptionPane.showMessageDialog(null,"비번틀림");
+				//response.sendRedirect("list");
 			}
 			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
 			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");	
