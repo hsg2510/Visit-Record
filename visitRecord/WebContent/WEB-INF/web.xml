@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>visitRecord</display-name>
+  <context-param>
+  	<param-name>driver</param-name>
+  	<param-value>cubrid.jdbc.driver.CUBRIDDriver</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>url</param-name>
+  	<param-value>jdbc:cubrid:localhost:33000:demodb:::</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>username</param-name>
+  	<param-value>dba</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>password</param-name>
+  	<param-value>1111</param-value>
+  </context-param>
+
    <!-- 서블릿 선언 -->
   <servlet>
   	<servlet-name>VisitRecord</servlet-name>
@@ -13,26 +30,15 @@
   <servlet>
   	<servlet-name>RecordUpdate</servlet-name>
   	<servlet-class>visitRecord.RecordUpdate</servlet-class>
-  	<init-param>
-  		<param-name>driver</param-name>
-  		<param-value>com.mysql.jdbc.Driver</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>url</param-name>
-  		<param-value>jdbc:mysql://localhost/studydb</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>username</param-name>
-  		<param-value>study</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>password</param-name>
-  		<param-value>study</param-value>
-  	</init-param>
   </servlet>
   <servlet>
   	<servlet-name>UpdateMessage</servlet-name>
   	<servlet-class>visitRecord.UpdateMessage</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AppInitServlet</servlet-name>
+  	<servlet-class>visitRecord.AppInitServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
   </servlet>
   
   <!-- 서블릿을 URL과 연결 -->

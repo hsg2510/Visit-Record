@@ -7,8 +7,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 import javax.swing.JOptionPane;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +28,11 @@ public class RecordUpdate extends HttpServlet {
 		ResultSet rs = null;
 		
 		try{
-			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
-			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
+			ServletContext sc = this.getServletContext();
+			conn = (Connection) sc.getAttribute("conn");
+			
+			//Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			//conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
 			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			//conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
 			//Class.forName(this.getInitParameter("driver"));
@@ -70,7 +75,7 @@ public class RecordUpdate extends HttpServlet {
 		} finally {
 					try {if (rs != null) rs.close(); } catch(Exception e){}
 					try {if (stmt != null) stmt.close(); } catch(Exception e){}
-					try {if (conn != null) conn.close(); } catch(Exception e){}			
+					//try {if (conn != null) conn.close(); } catch(Exception e){}			
 			
 		}
 	}
@@ -110,7 +115,7 @@ public class RecordUpdate extends HttpServlet {
 			throw new ServletException(e);			
 		} finally {
 			try { if (stmt !=null) stmt.close();} catch(Exception e){}
-			try { if (conn !=null) conn.close();} catch(Exception e){}
+			//try { if (conn !=null) conn.close();} catch(Exception e){}
 		}
 		
 	

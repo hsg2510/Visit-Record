@@ -16,12 +16,12 @@ public class UpdateMessage extends HttpServlet {
 	protected void doPost(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException{
-		request.setCharacterEncoding("UTF-8");
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String email,pwd;
 		try{
+			request.setCharacterEncoding("UTF-8");
 			email = request.getParameter("email");
 			pwd = request.getParameter("password");
 			
@@ -33,13 +33,13 @@ public class UpdateMessage extends HttpServlet {
 			rs = stmt.executeQuery("select from visitRecord where pwd=" + request.getParameter("pwd") );
 			
 			
-			if(rs.next() == false)
-			{	
-				out.println("등록 실패 비번 틀림");
+			//if(rs.next() == false)
+			//{	
+				//out.println("등록 실패 비번 틀림");
 				
 				//JOptionPane.showMessageDialog(null,"비번틀림");
 				//response.sendRedirect("list");
-			}
+			//}
 			
 			//Class.forName(this.getInitParameter("driver"));
 			//conn = DriverManager.getConnection(
@@ -59,7 +59,7 @@ public class UpdateMessage extends HttpServlet {
 			throw new ServletException(e);			
 		} finally {
 			try { if (stmt !=null) stmt.close();} catch(Exception e){}
-			try { if (conn !=null) conn.close();} catch(Exception e){}
+			//try { if (conn !=null) conn.close();} catch(Exception e){}
 		}
 	}
 

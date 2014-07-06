@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -28,8 +29,11 @@ public class RecordList extends GenericServlet {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
-			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
+			ServletContext sc = this.getServletContext();
+			conn = (Connection) sc.getAttribute("conn");
+			
+			//Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			//conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select * from visitRecord");
 			response.setContentType("text/html; charset=UTF-8");
@@ -66,7 +70,7 @@ public class RecordList extends GenericServlet {
 		} finally{
 			try { if (rs != null) rs.close();} catch(Exception e){}
 			try { if (stmt != null) stmt.close();} catch(Exception e){}
-			try { if (conn != null) conn.close();} catch(Exception e){}
+			//try { if (conn != null) conn.close();} catch(Exception e){}
 		}
 
 	}

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -51,10 +52,14 @@ public class VisitRecord extends HttpServlet {
 		PreparedStatement stmt = null;
 		
 		try{
+			//ServletContext sc = this.getServletContext();
+			//conn = (Connection) sc.getAttribute("conn");
 			
-			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			
+			
+			//Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
 			conn = DriverManager.getConnection("jdbc:cubrid:localhost:33000:demodb:::", "dba", "1111");
-			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			//conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = conn.prepareStatement("Insert into visitRecord (email, pwd, contents, subject, cre_date, mod_date)" +
 			                              " values (?, ?, ?, ?, now(), now())");
@@ -70,7 +75,7 @@ public class VisitRecord extends HttpServlet {
 			throw new ServletException(e);
 		} finally {
 			try { if (stmt != null) stmt.close();} catch(Exception e) {}
-			try { if (conn != null) conn.close();} catch(Exception e) {}
+			//try { if (conn != null) conn.close();} catch(Exception e) {}
 		}
 	}
 }
