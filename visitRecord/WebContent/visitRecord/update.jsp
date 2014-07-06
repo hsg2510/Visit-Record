@@ -30,12 +30,9 @@ RecordSet record = (RecordSet)request.getAttribute("records");
 //ArrayList<RecordSet> records = (ArrayList<RecordSet>)request.getAttribute("records"); 
 //for(RecordSet record : records) {
 %>
-<%=record.getEmail() %>,
-<%=record.getPwd() %>,
-<form action='update' method='post'>
+<form action='login' method='get'>
 이메일: <input type='text' name='email' value='<%=record.getEmail() %>' readonly><br>
 내용: <input type='text' name='contents' value='<%=record.getContents()%>'> <br>
-<input type='text' name='password' value='<%=record.getPwd()%>'> <br>
 <input type ='submit' value='수정'>
 <input type = 'button' value='취소' onclick='location.href="message"'>
 </form>

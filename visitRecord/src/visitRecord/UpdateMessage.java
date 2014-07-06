@@ -21,7 +21,7 @@ public class UpdateMessage extends HttpServlet {
 		ResultSet rs = null;
 		String email,pwd;
 		try{
-			request.setCharacterEncoding("UTF-8");
+			
 			email = request.getParameter("email");
 			pwd = request.getParameter("password");
 			
